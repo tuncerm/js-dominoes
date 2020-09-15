@@ -11,48 +11,88 @@
     <div id="svg"></div>
 </body>
 <script>
-{
-    const f = (() => {
-        const domino = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        domino.setAttribute("width", 120);
-        domino.setAttribute("height", 60);
-        // create a rect
-        const shell = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        shell.setAttribute("x", "0");
-        shell.setAttribute("y", "0");
-        shell.setAttribute("width", "120");
-        shell.setAttribute("height", "60");
-        shell.setAttribute("fill", "black");
+    {
+        const makeRect = (x, y, w, h, c)=>{
+            const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect.setAttribute("x", x);
+            rect.setAttribute("y", y);
+            rect.setAttribute("width", w);
+            rect.setAttribute("height", h);
+            rect.setAttribute("fill", c);
+            return rect;
+        }
 
-        const innerRectLeft = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        innerRectLeft.setAttribute("x", "3");
-        innerRectLeft.setAttribute("y", "3");
-        innerRectLeft.setAttribute("width", "54");
-        innerRectLeft.setAttribute("height", "54");
-        innerRectLeft.setAttribute("fill", "white");
+        const makeCircle = (x, y, r, c)=>{
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cy", y);
+            circle.setAttribute("cx", x);
+            circle.setAttribute("r", r);
+            circle.setAttribute("fill", c);
+            return circle;
+        }
 
-        const innerRectRight = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        innerRectRight.setAttribute("x", "60");
-        innerRectRight.setAttribute("y", "3");
-        innerRectRight.setAttribute("width", "54");
-        innerRectRight.setAttribute("height", "54");
-        innerRectRight.setAttribute("fill", "white");
+        const makeDominoDots = (domino, w, h, n, o = 0)=>{
+            const size = h/10;
+            switch(n){
+                case 1:
+                    domino.appendChild(makeCircle(o + (h / 2), h/2, size, "black"));
+                    break;
+                case 2:
+                    domino.appendChild(makeCircle(o + (h / 3), h/2, size, "black"));
+                    domino.appendChild(makeCircle(o + (2 * h / 3), h/2, size, "black"));
+                    break;
+                case 3:
+                    domino.appendChild(makeCircle(o + (h / 2), h/2, size, "black"));
+                    domino.appendChild(makeCircle(o + (h / 3), h/3, size, "black"));
+                    domino.appendChild(makeCircle(o + (2 * h / 3), 2 * h / 3, size, "black"));
+                    break;
+                case 4:
+                    domino.appendChild(makeCircle(o + (h / 3), h/3, size, "black"));
+                    domino.appendChild(makeCircle(o + (h / 3), 2 * h/3, size, "black"));
+                    domino.appendChild(makeCircle(o + (2 * h / 3), h / 3, size, "black"));
+                    domino.appendChild(makeCircle(o + (2 * h / 3), 2 * h / 3, size, "black"));
+                    break;
+                case 5:
+                    domino.appendChild(makeCircle(o + (h / 2), h/2, size, "black"));
+                    domino.appendChild(makeCircle(o + (h / 3), h/3, size, "black"));
+                    domino.appendChild(makeCircle(o + (h / 3), 2 * h/3, size, "black"));
+                    domino.appendChild(makeCircle(o + (2 * h / 3), h / 3, size, "black"));
+                    domino.appendChild(makeCircle(o + (2 * h / 3), 2 * h / 3, size, "black"));
+                    break;
+                case 6:
+                    domino.appendChild(makeCircle(o + (h / 3), 1 * h/4, size, "black"));
+                    domino.appendChild(makeCircle(o + (h / 3), 2 * h/4, size, "black"));
+                    domino.appendChild(makeCircle(o + (h / 3), 3 * h/4, size, "black"));
+                    domino.appendChild(makeCircle(o + (2 * h / 3), 1 * h/4, size, "black"));
+                    domino.appendChild(makeCircle(o + (2 * h / 3), 2 * h/4, size, "black"));
+                    domino.appendChild(makeCircle(o + (2 * h / 3), 3 * h/4, size, "black"));
+                    break;
+            }
+        }
 
-        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        circle.setAttribute("cx", "30");
-        circle.setAttribute("cy", "30");
-        circle.setAttribute("r", "5");
-        circle.setAttribute("fill", "black");
+        const makeSVG = (w, h, l, r)=>{
+            const domino = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            domino.setAttribute("width", w);
+            domino.setAttribute("height", h);
+            const bt = Math.round(h/20);
+            const iw = h - 2 * bt;
+            const shell = makeRect(0, 0, w, h, "black");
+            const innerRectLeft = makeRect(bt, bt, iw, iw, "white");
+            const innerRectRight = makeRect(h, bt, iw, iw, "white");
+            const circle = makeCircle(h/2, h/2, h/8, "black");
+            domino.appendChild(shell);
+            domino.appendChild(innerRectLeft);
+            domino.appendChild(innerRectRight);
+            makeDominoDots(domino, w, h, l, 0);
+            makeDominoDots(domino, w, h, r, h);
+            return domino;
+        }
 
-        domino.appendChild(shell);
-        domino.appendChild(innerRectLeft);
-        domino.appendChild(innerRectRight);
-        domino.appendChild(circle);
+        const f = (() => {
+            document.getElementById("svg").appendChild(makeSVG(78, 40, 1, 3));
+        });
 
-        document.getElementById("svg").appendChild(domino);
-    });
-
-    f()
-}
+        f();
+    }
 </script>
 </html>
