@@ -11,6 +11,48 @@
     <div id="svg"></div>
 </body>
 <script>
+{
+    const f = (() => {
+        const domino = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        domino.setAttribute("width", 120);
+        domino.setAttribute("height", 60);
+        // create a rect
+        const shell = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        shell.setAttribute("x", "0");
+        shell.setAttribute("y", "0");
+        shell.setAttribute("width", "120");
+        shell.setAttribute("height", "60");
+        shell.setAttribute("fill", "black");
 
+        const innerRectLeft = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        innerRectLeft.setAttribute("x", "3");
+        innerRectLeft.setAttribute("y", "3");
+        innerRectLeft.setAttribute("width", "54");
+        innerRectLeft.setAttribute("height", "54");
+        innerRectLeft.setAttribute("fill", "white");
+
+        const innerRectRight = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        innerRectRight.setAttribute("x", "60");
+        innerRectRight.setAttribute("y", "3");
+        innerRectRight.setAttribute("width", "54");
+        innerRectRight.setAttribute("height", "54");
+        innerRectRight.setAttribute("fill", "white");
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", "30");
+        circle.setAttribute("cy", "30");
+        circle.setAttribute("r", "5");
+        circle.setAttribute("fill", "black");
+
+        domino.appendChild(shell);
+        domino.appendChild(innerRectLeft);
+        domino.appendChild(innerRectRight);
+        domino.appendChild(circle);
+
+        document.getElementById("svg").appendChild(domino);
+    });
+
+    f()
+}
 </script>
 </html>
