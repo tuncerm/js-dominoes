@@ -197,4 +197,82 @@ class Game {
     }
 }
 
+class MakeSVG{
+    static makeRect = (x, y, w, h, c)=>{
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.setAttribute("x", x);
+        rect.setAttribute("y", y);
+        rect.setAttribute("width", w);
+        rect.setAttribute("height", h);
+        rect.setAttribute("fill", c);
+        return rect;
+    }
+
+    static makeCircle = (x, y, r, c)=>{
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cy", y);
+        circle.setAttribute("cx", x);
+        circle.setAttribute("r", r);
+        circle.setAttribute("fill", c);
+        return circle;
+    }
+
+    static makeDominoDots = (domino, w, h, n, o = 0)=>{
+        const size = h/10;
+        switch(n){
+            case 1:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 2), h/2, size, "black"));
+                break;
+            case 2:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), h/2, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h/2, size, "black"));
+                break;
+            case 3:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 2), h/2, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), h/3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 2 * h / 3, size, "black"));
+                break;
+            case 4:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), h/3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h / 3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 2 * h / 3, size, "black"));
+                break;
+            case 5:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 2), h/2, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), h/3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h / 3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 2 * h / 3, size, "black"));
+                break;
+            case 6:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 1 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 3 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 1 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 2 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 3 * h/4, size, "black"));
+                break;
+        }
+    }
+
+    static makeSVG = (w, h, l, r)=>{
+        const domino = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        domino.setAttribute("width", w);
+        domino.setAttribute("height", h);
+        const bt = Math.round(h/20);
+        const iw = h - 2 * bt;
+        const shell = MakeSVG.makeRect(0, 0, w, h, "black");
+        const innerRectLeft = MakeSVG.makeRect(bt, bt, iw, iw, "white");
+        const innerRectRight = MakeSVG.makeRect(h, bt, iw, iw, "white");
+        domino.appendChild(shell);
+        domino.appendChild(innerRectLeft);
+        domino.appendChild(innerRectRight);
+        MakeSVG.makeDominoDots(domino, w, h, l, 0);
+        MakeSVG.makeDominoDots(domino, w, h, r, h);
+        return domino;
+    }
+
+}
+
 new Game(["Alice", "Bob"]).start();
