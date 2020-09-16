@@ -235,39 +235,24 @@ class MakeSVG{
     static makeDominoDots = (domino, w, h, n, o = 0)=>{
         const size = h/10;
         switch(n){
+            case 5:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 4), 1 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (3 * h / 4), 3 * h/4, size, "black"));
+            case 3:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 4), 3 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (3 * h / 4), 1 * h/4, size, "black"));
             case 1:
                 domino.appendChild(MakeSVG.makeCircle(o + (h / 2), h/2, size, "black"));
                 break;
-            case 2:
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/3, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h / 3, size, "black"));
-                break;
-            case 3:
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 2), h/2, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/3, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h / 3, size, "black"));
-                break;
-            case 4:
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), h/3, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/3, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h / 3, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 2 * h / 3, size, "black"));
-                break;
-            case 5:
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 2), h/2, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), h/3, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/3, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h / 3, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 2 * h / 3, size, "black"));
-                break;
             case 6:
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 1 * h/4, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/4, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 3 * h/4, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 1 * h/4, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 2 * h/4, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 3 * h/4, size, "black"));
-                break;
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 4), 2 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (3 * h / 4), 2 * h/4, size, "black"));
+            case 4:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 4), 1 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (3 * h / 4), 3 * h/4, size, "black"));
+            case 2:
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 4), 3 * h/4, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (3 * h / 4), 1 * h/4, size, "black"));
         }
     }
 
@@ -284,7 +269,7 @@ class MakeSVG{
         domino.appendChild(innerRectLeft);
         domino.appendChild(innerRectRight);
         MakeSVG.makeDominoDots(domino, w, h, l, 0);
-        MakeSVG.makeDominoDots(domino, w, h, r, h);
+        MakeSVG.makeDominoDots(domino, w, h, r, h - bt);
         return domino;
     }
 
