@@ -1,11 +1,15 @@
-function createElement(str){
-    const p = document.createElement('p');
-    p.innerText = str; p;
-    return p;
+function createElement(tag, content){
+    const e = document.createElement(tag);
+    if(Array.isArray(content)){
+        content.map(c=>e.append(c));
+    } else {
+        e.append(content);
+    }
+    return e;
 }
 
 function print(loc, str) {
-    loc.append(createElement(str));
+    loc.append(createElement('p', str));
 }
 
 class Tile {
@@ -95,6 +99,10 @@ class Board {
     toString() {
         return this.path.reduce((acc, item) => `${acc} ${item}`, "");
     }
+
+    render(loc){
+        loc.append(createElement('div', this.path.map(p=>MakeSVG.makeSVG(78, 40, p.left, p.right))));
+    }
 }
 
 class Hand {
@@ -147,7 +155,7 @@ class Game {
         this.deck.shuffle();
         this.giveInitialTiles();
         print(this.loc, `Game starting with first tile: ${this.board.toString()}`);
-        
+        this.board.render(this.loc);
         while (true) {
             let current = this.players[this.turn];
             let edges = this.board.getEdges();
@@ -168,8 +176,8 @@ class Game {
                     print(this.loc, `${current.name} plays ${tile.toString()} to connect to tile ${this.board.left().toString()} on the board`);
                     this.board.insertLeft(tile);
                 }
-
                 print(this.loc, `Board is now: ${this.board.toString()}`);
+                this.board.render(this.loc);
                 this.turn = (this.turn + 1) % 2;
             } else {
                 if(this.deck.isEmpty())
