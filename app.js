@@ -239,13 +239,13 @@ class MakeSVG{
                 domino.appendChild(MakeSVG.makeCircle(o + (h / 2), h/2, size, "black"));
                 break;
             case 2:
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), h/2, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h/2, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h / 3, size, "black"));
                 break;
             case 3:
                 domino.appendChild(MakeSVG.makeCircle(o + (h / 2), h/2, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), h/3, size, "black"));
-                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), 2 * h / 3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (h / 3), 2 * h/3, size, "black"));
+                domino.appendChild(MakeSVG.makeCircle(o + (2 * h / 3), h / 3, size, "black"));
                 break;
             case 4:
                 domino.appendChild(MakeSVG.makeCircle(o + (h / 3), h/3, size, "black"));
