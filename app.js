@@ -116,8 +116,15 @@ class Hand {
         return this.tiles.findIndex(tile => tile.contains(options[0]) || tile.contains(options[1])) >= 0;
     }
 
-    getTile(options) {
+    getFirstTile(options) {
         let index = this.tiles.findIndex(tile => tile.contains(options[0]) || tile.contains(options[1]))
+        return this.tiles.splice(index, 1)[0];
+    }
+
+    getRandomTile(options) {
+        let tiles = this.tiles.filter(tile => tile.contains(options[0]) || tile.contains(options[1]))
+        let tile = tiles[Math.random()*tiles.length<<0];
+        let index = this.tiles.indexOf(tile);
         return this.tiles.splice(index, 1)[0];
     }
 
@@ -160,7 +167,7 @@ class Game {
             let current = this.players[this.turn];
             let edges = this.board.getEdges();
             if (current.hand.hasTile(edges)) {
-                let tile = current.hand.getTile(edges);
+                let tile = current.hand.getRandomTile(edges);
                 if (tile.left === edges[1]) {
                     print(this.loc, `${current.name} plays ${tile.toString()} to connect to tile ${this.board.right().toString()} on the board`);
                     this.board.insertRight(tile);
