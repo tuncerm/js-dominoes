@@ -1,5 +1,11 @@
-function print(str) {
-    console.log(str);
+function createElement(str){
+    const p = document.createElement('p');
+    p.innerText = str; p;
+    return p;
+}
+
+function print(loc, str) {
+    loc.append(createElement(str));
 }
 
 class Tile {
@@ -128,7 +134,8 @@ class Player {
 }
 
 class Game {
-    constructor(players) {
+    constructor(loc, players) {
+        this.loc = loc;
         this.deck = new Deck();
         this.players = [];
         players.forEach(player => {
@@ -139,7 +146,7 @@ class Game {
     start() {
         this.deck.shuffle();
         this.giveInitialTiles();
-        print(`Game starting with first tile: ${this.board.toString()}`);
+        print(this.loc, `Game starting with first tile: ${this.board.toString()}`);
         
         while (true) {
             let current = this.players[this.turn];
@@ -147,43 +154,43 @@ class Game {
             if (current.hand.hasTile(edges)) {
                 let tile = current.hand.getTile(edges);
                 if (tile.left === edges[1]) {
-                    print(`${current.name} plays ${tile.toString()} to connect to tile ${this.board.right().toString()} on the board`);
+                    print(this.loc, `${current.name} plays ${tile.toString()} to connect to tile ${this.board.right().toString()} on the board`);
                     this.board.insertRight(tile);
                 } else if (tile.right === edges[0]) {
-                    print(`${current.name} plays ${tile.toString()} to connect to tile ${this.board.left().toString()} on the board`);
+                    print(this.loc, `${current.name} plays ${tile.toString()} to connect to tile ${this.board.left().toString()} on the board`);
                     this.board.insertLeft(tile);
                 } else if (tile.right === edges[1]) {
                     tile.turn();
-                    print(`${current.name} plays ${tile.toString()} to connect to tile ${this.board.right().toString()} on the board`);
+                    print(this.loc, `${current.name} plays ${tile.toString()} to connect to tile ${this.board.right().toString()} on the board`);
                     this.board.insertRight(tile);
                 } else if (tile.left === edges[0]) {
                     tile.turn();
-                    print(`${current.name} plays ${tile.toString()} to connect to tile ${this.board.left().toString()} on the board`);
+                    print(this.loc, `${current.name} plays ${tile.toString()} to connect to tile ${this.board.left().toString()} on the board`);
                     this.board.insertLeft(tile);
                 }
 
-                print(`Board is now: ${this.board.toString()}`);
+                print(this.loc, `Board is now: ${this.board.toString()}`);
                 this.turn = (this.turn + 1) % 2;
             } else {
                 if(this.deck.isEmpty())
                 {
-                    print("Deck is Empty, Game Over!");
+                    print(this.loc, "Deck is Empty, Game Over!");
                     break;
                 }
 
                 const temp = this.deck.getTile();
-                print(`${current.name} can't play, drawing tile ${temp}`);
+                print(this.loc, `${current.name} can't play, drawing tile ${temp}`);
                 current.hand.insertTile(temp);
             }
 
             if(current.hand.isEmpty())
             {
-                print(`Player ${current.name} has won!`);
+                print(this.loc, `Player ${current.name} has won!`);
                 break;
             }
         }
 
-        print('Thanks for Playing!');
+        print(this.loc, 'Thanks for Playing!');
     }
 
     giveInitialTiles() {
@@ -275,4 +282,4 @@ class MakeSVG{
 
 }
 
-new Game(["Alice", "Bob"]).start();
+new Game(document.getElementById('svg'), ["Alice", "Bob"]).start();
