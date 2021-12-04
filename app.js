@@ -32,9 +32,8 @@ class Tile {
 }
 
 class Deck {
-    tiles = [];
-
     constructor() {
+        this.tiles = [];
         for (let left = 0; left < 7; left++) {
             for (let right = left; right < 7; right++) {
                 this.tiles.push(new Tile(left, right));
@@ -68,8 +67,8 @@ class Deck {
 }
 
 class Board {
-    path = [];
     constructor(tile) {
+        this.path = [];
         this.path.push(tile);
     }
 
@@ -106,7 +105,9 @@ class Board {
 }
 
 class Hand {
-    tiles = [];
+    constructor() {
+        this.tiles = [];
+    }
 
     insertTile(tile) {
         this.tiles.push(tile);
@@ -220,7 +221,7 @@ class Game {
 }
 
 class MakeSVG{
-    static makeRect = (x, y, w, h, c)=>{
+    static makeRect(x, y, w, h, c){
         const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         rect.setAttribute("x", x);
         rect.setAttribute("y", y);
@@ -230,7 +231,7 @@ class MakeSVG{
         return rect;
     }
 
-    static makeCircle = (x, y, r, c)=>{
+    static makeCircle(x, y, r, c){
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         circle.setAttribute("cy", y);
         circle.setAttribute("cx", x);
@@ -239,7 +240,7 @@ class MakeSVG{
         return circle;
     }
 
-    static makeDominoDots = (domino, w, h, n, o = 0)=>{
+    static makeDominoDots(domino, w, h, n, o = 0){
         const size = h/10;
         switch(n){
             case 5:
@@ -263,7 +264,7 @@ class MakeSVG{
         }
     }
 
-    static makeSVG = (w, h, l, r)=>{
+    static makeSVG(w, h, l, r) {
         const domino = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         domino.setAttribute("width", w);
         domino.setAttribute("height", h);
